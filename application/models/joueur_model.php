@@ -4,10 +4,13 @@ class Joueur_model extends CI_Model {
 
     function __construct()
     {
-        // Call the Model constructor
         parent::__construct();
     }
 
+    /* 
+    ** Liste l'ensemble des joueurs du tournois
+    ** return la liste des joueurs
+    */
     function ListJoueur()
     {
         $result = $this->db->get('joueur')->result();
@@ -20,6 +23,12 @@ class Joueur_model extends CI_Model {
             return null;
         }
     }
+    
+    /* 
+    ** Recupère un joueur
+    ** @param $pid: id du joueur
+    ** return le joueur
+    */
     function GetJoueur($pid)
     {
         $this->db->where("id_joueur", $pid);
@@ -27,6 +36,11 @@ class Joueur_model extends CI_Model {
         return $query->result();
     }
     
+    /* 
+    ** Création d'un joueur
+    ** @param $pdata: les champs du joueur
+    ** return le nombre de lignes affectées
+    */
     function NewJoueur($pdata)
     {
         $data = array('nom_joueur' => $pdata['nom'],
@@ -36,14 +50,32 @@ class Joueur_model extends CI_Model {
         return $this->db->affected_rows();
     }
 
+    /* 
+    ** Recupère un joueur
+    ** @param $pID: id du joueur
+    ** @param $data: les champs du joueur (hors id)
+    ** return le nombre de lignes affectées
+    */
     function UpdateJoueur($data, $pID)
     {
         var_dump($data);
         var_dump($pID);
         $this->db->where('id_joueur', $pID);
         $this->db->update('joueur', $data);
-        /*$result = $this->db->affected_rows();
-        return $result;*/
+        $result = $this->db->affected_rows();
+        return $result;
+    }
+    
+    /* 
+    ** Supprime un joueur
+    ** @param $pID: id du joueur
+    ** return le nombre de lignes affectées
+    */
+    function DeleteJoueur($pID)
+    {
+        
+        $this->db->where('id_joueur', $pID);
+        $this->db->delete('joueur');
     }
 
 }

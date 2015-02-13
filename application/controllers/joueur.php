@@ -32,12 +32,18 @@ class Joueur extends REST_Controller
         $this->methods['user_delete']['limit'] = 50; //50 requests per hour per user/key
     }
     
-    // Affiche tous les joueurs
+    /* 
+    ** /joueur
+    ** EN GET
+    */
     public function index_get()
     {
-         // Affiche un joueur
+        
         if (!$this->get('id'))
         {
+            /* 
+            ** liste des joueurs (/joueur)
+            */
             $result = $this->Joueur_model->ListJoueur();
         
             if($result)
@@ -50,6 +56,9 @@ class Joueur extends REST_Controller
             }
         }
         
+        /* 
+        ** un joueur (/joueur/$id)
+        */
         $joueur = $this->Joueur_model->GetJoueur( $this->get('id') );
         
         if ($joueur)
@@ -63,7 +72,10 @@ class Joueur extends REST_Controller
         
     }
     
-    // Création d'un joueur
+    /*
+    ** Création d'un joueur, /joueur
+    ** EN POST
+    */
     public function index_post()
     {
         $data['prenom'] = $this->post('prenom');
@@ -85,15 +97,19 @@ class Joueur extends REST_Controller
         }
         
     }
+    
+    /* 
+    ** Update d'un joueur, /joueur
+    ** EN PUT
+    */
+    
     public function index_put()
 	{
         
         $id = $this->put('id');
         $data=array('prenom_joueur' => $this->put('prenom'), 'nom_joueur' => $this->put('nom'));
-        //var_dump($id);
-        //var_dump($data);
         $result = $this->Joueur_model->UpdateJoueur($data, $id);
-        /*if ($result == 0)
+        if ($result == 0)
         {
             $this->response(array("error" => "Enregistrement échoué"), 400);
         }
@@ -101,52 +117,19 @@ class Joueur extends REST_Controller
         {
             $message = array('message' => 'UPDATED!');
             $this->response($message, 201);
-        }*/
+        }
 	}
     
-    /**function index_put()
+    /*
+    ** Suppression d'un joueur, /joueur/del/$id
+    ** EN DELETE
+    */
+    function d_delete($id)
     {
-        
-        //$this->some_model->updateUser( $this->get('id') );
-        $message = array('id' => $this->get('id'), 'name' => $this->post('name'), 'email' => $this->post('email'), 'message' => 'ADDED!');
-        
-        $this->response($message, 200); // 200 being the HTTP response code
-    }**/
-    
-    function user_delete()
-    {
-    	//$this->some_model->deletesomething( $this->get('id') );
-        $message = array('id' => $this->get('id'), 'message' => 'DELETED!');
+        $this->Joueur_model->DeleteJoueur($id);
+        $message = array('id' => $id, 'message' => 'DELETED!');
         
         $this->response($message, 200); // 200 being the HTTP response code
     }
     
-    function users_get()
-    {
-        //$users = $this->some_model->getSomething( $this->get('limit') );
-        $users = array(
-			array('id' => 1, 'name' => 'Some Guy', 'email' => 'example1@example.com'),
-			array('id' => 2, 'name' => 'Person Face', 'email' => 'example2@example.com'),
-			3 => array('id' => 3, 'name' => 'Scotty', 'email' => 'example3@example.com', 'fact' => array('hobbies' => array('fartings', 'bikes'))),
-		);
-        
-        if($users)
-        {
-            $this->response($users, 200); // 200 being the HTTP response code
-        }
-
-        else
-        {
-            $this->response(array('error' => 'Couldn\'t find any users!'), 404);
-        }
-    }
-
-
-	public function send_post()
-	{
-		var_dump($this->request->body);
-	}
-
-
-	
 }
