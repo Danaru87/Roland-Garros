@@ -9,7 +9,7 @@ class Match_model extends CI_Model {
 
     /* 
     ** Liste l'ensemble des match du tournois
-    ** return la liste des joueurs
+    ** return la liste des matchs
     */
     function ListMatch()
     {
@@ -47,8 +47,7 @@ class Match_model extends CI_Model {
     {
         $data = array('id_terrain' => $pdata['terrain'],
                       'id_joueur1' => $pdata['joueur1'],
-                     'id_joueur2' => $pdata['joueur2'],
-                     'id_joueur_gagnant' => $pdata['gagnant']);
+                     'id_joueur2' => $pdata['joueur2']);
         $this->db->insert('match', $data);
         
         return $this->db->affected_rows();

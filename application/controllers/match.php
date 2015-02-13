@@ -81,8 +81,7 @@ class Match extends REST_Controller
         $data['terrain'] = $this->post('terrain');
         $data['joueur1'] = $this->post('joueur1');
         $data['joueur2'] = $this->post('joueur2');
-        $data['gagnant'] = $this->post('gagnant');
-        if (!$data['terrain'] or !$data['joueur1'] or !$data['joueur2'] or !$data['gagnant'] )
+        if (!$data['terrain'] or !$data['joueur1'] or !$data['joueur2'])
         {
             $this->response('Paramêtre(s) manquant(s)', 400);
         }
