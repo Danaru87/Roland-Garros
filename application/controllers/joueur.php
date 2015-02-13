@@ -121,13 +121,13 @@ class Joueur extends REST_Controller
 	}
     
     /*
-    ** Suppression d'un joueur, /joueur/del/$id
+    ** Suppression d'un joueur, /joueur/$id
     ** EN DELETE
     */
-    function d_delete($id)
+    function index_delete()
     {
-        $this->Joueur_model->DeleteJoueur($id);
-        $message = array('id' => $id, 'message' => 'DELETED!');
+        $this->Joueur_model->DeleteJoueur($this->get('id'));
+        $message = array('id' => $this->get('id'), 'message' => 'DELETED!');
         
         $this->response($message, 200); // 200 being the HTTP response code
     }
