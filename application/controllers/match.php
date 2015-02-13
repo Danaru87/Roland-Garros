@@ -57,7 +57,7 @@ class Match extends REST_Controller
         }
         
         /* 
-        ** un joueur (/match/$id)
+        ** un match (/match/$id)
         */
         $joueur = $this->Match_model->GetMatch( $this->get('id') );
         
@@ -125,7 +125,7 @@ class Match extends REST_Controller
 	}
     
     /*
-    ** Suppression d'un joueur, /joueur/$id
+    ** Suppression d'un match, /match/$id
     ** EN DELETE
     */
     function index_delete()
