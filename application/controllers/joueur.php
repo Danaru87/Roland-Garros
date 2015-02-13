@@ -88,13 +88,12 @@ class Joueur extends REST_Controller
     public function index_put()
 	{
         
-        $data['id'] = $this->put('id');
-        $data['prenom_joueur'] = $this->put('prenom');
-        $data['nom_joueur'] = $this->put('nom');
-        var_dump($data);
-        $result = $this->Joueur_model->UpdateJoueur($data);
-        var_dump($result);
-        if ($result == 0)
+        $id = $this->put('id');
+        $data=array('prenom_joueur' => $this->put('prenom'), 'nom_joueur' => $this->put('nom'));
+        //var_dump($id);
+        //var_dump($data);
+        $result = $this->Joueur_model->UpdateJoueur($data, $id);
+        /*if ($result == 0)
         {
             $this->response(array("error" => "Enregistrement échoué"), 400);
         }
@@ -102,7 +101,7 @@ class Joueur extends REST_Controller
         {
             $message = array('message' => 'UPDATED!');
             $this->response($message, 201);
-        }
+        }*/
 	}
     
     /**function index_put()

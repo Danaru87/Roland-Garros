@@ -1,8 +1,6 @@
 <?php
 class Joueur_model extends CI_Model {
 
-    var $id   = 0;
-    var $nom = '';
 
     function __construct()
     {
@@ -38,12 +36,14 @@ class Joueur_model extends CI_Model {
         return $this->db->affected_rows();
     }
 
-    function UpdateJoueur($data)
+    function UpdateJoueur($data, $pID)
     {
-        $this->db->where('id_joueur', $data['id']);
+        var_dump($data);
+        var_dump($pID);
+        $this->db->where('id_joueur', $pID);
         $this->db->update('joueur', $data);
-        $result = $this->db->affected_rows();
-        return $result;
+        /*$result = $this->db->affected_rows();
+        return $result;*/
     }
 
 }
