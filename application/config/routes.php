@@ -43,6 +43,9 @@ $route['default_controller'] = 'joueur';
 // Joueur
 $route['joueur/(:num)'] = 'joueur/index/id/$1';
 
+// Match
+$route['match/(:num)'] = 'match/index/id/$1';
+
 
 $route['404_override'] = '';
 

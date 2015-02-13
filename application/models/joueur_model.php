@@ -2,9 +2,16 @@
 class Joueur_model extends CI_Model {
 
 
-    function __construct()
+    $id = '';
+    $nom = '';
+    $prenom = '';
+    
+    function __construct($pId = null, $pNom = null, $pPrenom = null)
     {
         parent::__construct();
+        $id = $pId;
+        $nom = $pNom;
+        $prenom = $pPrenom;
     }
 
     /* 
@@ -58,8 +65,7 @@ class Joueur_model extends CI_Model {
     */
     function UpdateJoueur($data, $pID)
     {
-        var_dump($data);
-        var_dump($pID);
+        
         $this->db->where('id_joueur', $pID);
         $this->db->update('joueur', $data);
         $result = $this->db->affected_rows();
