@@ -13,27 +13,42 @@ class Match_model extends CI_Model {
     */
     function ListMatch()
     {
-        
-        // A Faire
-        $result = $this->db->get('match')->result();
-        $this->db->close();
-        if($result)
-        {
-            return $result;
-        }
-        else
-        {
-            return null;
-        }
-    }
-    
-    function ListMatchCurrent()
-    {
-        $this->db->where("termine", "1");
+
         $result = $this->db->get('match')->result();
         $leMatch = null;
         foreach($result as $match)
         {
+            $this->db->from('joueur');
+            $this->db->where("id_joueur", $match->id_joueur1);
+            $this->db->select("nom_joueur, prenom_joueur, Maj");
+            $joueur = $this->db->get()->result();
+            $match->Joueur1 = $joueur;
+
+            $this->db->from('joueur');
+            $this->db->where("id_joueur", $match->id_joueur2);
+            $this->db->select("nom_joueur, prenom_joueur, Maj");
+
+            $joueur = $this->db->get()->result();
+            $match->Joueur2 = $joueur;
+
+            $this->db->from('terrain');
+            $this->db->where('id_terrain', $match->id_terrain);
+            $terrain = $this->db->get()->result();
+            $match->terrain = $terrain;
+
+        }
+        $this->db->close();
+        return $result;
+    }
+    
+    function ListMatchCurrent()
+    {
+        $this->db->where('termine', '0');
+        $result = $this->db->get('match')->result();
+        $leMatch = null;
+        foreach($result as $match)
+        {
+
             $this->db->from('joueur');
             $this->db->where("id_joueur", $match->id_joueur1);
             $this->db->select("nom_joueur, prenom_joueur, Maj");
