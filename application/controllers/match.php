@@ -59,11 +59,11 @@ class Match extends REST_Controller
         /* 
         ** un match (/match/$id)
         */
-        $joueur = $this->Match_model->GetMatch( $this->get('id') );
+        $match = $this->Match_model->GetMatch( $this->get('id') );
         
-        if ($joueur)
+        if ($match)
         {
-            $this->response($joueur, 200);
+            $this->response($match, 200);
         }
         else
         {
@@ -134,6 +134,12 @@ class Match extends REST_Controller
         $message = array('id' => $this->get('id'), 'message' => 'DELETED!');
         
         $this->response($message, 200); // 200 being the HTTP response code
+    }
+    
+    function current_get()
+    {
+        $data = $this->Match_model->ListMatchCurrent();
+        
     }
     
 }

@@ -2,16 +2,10 @@
 class Joueur_model extends CI_Model {
 
 
-    $id = '';
-    $nom = '';
-    $prenom = '';
-    
+
     function __construct($pId = null, $pNom = null, $pPrenom = null)
     {
         parent::__construct();
-        $id = $pId;
-        $nom = $pNom;
-        $prenom = $pPrenom;
     }
 
     /* 

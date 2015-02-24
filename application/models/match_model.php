@@ -26,6 +26,26 @@ class Match_model extends CI_Model {
         }
     }
     
+    function ListMatchCurrent()
+    {
+        $this->db->where('termine', true);
+        $matchs = $this->db->get('match')->result();
+
+        foreach($matchs as $match)
+        {
+            $this->db->where('id_joueur', $match['id_joueur_1']);
+            $joueur1 = $this->db->get('joueur')->result();
+
+            $this->db->where('id_joueur', $match['id_joueur_2']);
+            $joueur2 = $this->db->get('joueur')->result();
+
+            var_dump($joueur1);
+            var_dump($joueur2);
+
+        }
+        
+    }
+    
     /* 
     ** Recupère un match
     ** @param $pid: id du match

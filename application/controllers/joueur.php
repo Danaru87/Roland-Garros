@@ -22,8 +22,8 @@ class Joueur extends REST_Controller
     {
         // Construct our parent class
         parent::__construct();
-        $this->load->model('Joueur_model'); 
-        
+        $this->load->model('Joueur_model');
+
         // Configure limits on our controller methods. Ensure
         // you have created the 'limits' table and enabled 'limits'
         // within application/config/rest.php
@@ -31,21 +31,19 @@ class Joueur extends REST_Controller
         //$this->methods['user_post']['limit'] = 100; //100 requests per hour per user/key
         //$this->methods['user_delete']['limit'] = 50; //50 requests per hour per user/key
     }
-    
-    /* 
+
+    /*
     ** /joueur
     ** EN GET
     */
     public function index_get()
     {
-        
         if (!$this->get('id'))
         {
-            /* 
+            /*
             ** liste des joueurs (/joueur)
             */
             $result = $this->Joueur_model->ListJoueur();
-        
             if($result)
             {
                 $this->response($result, 200);
@@ -55,12 +53,12 @@ class Joueur extends REST_Controller
                 $this->response(array("error" => "Aucun joueur dans la base"), 404);
             }
         }
-        
-        /* 
+
+        /*
         ** un joueur (/joueur/$id)
         */
         $joueur = $this->Joueur_model->GetJoueur( $this->get('id') );
-        
+
         if ($joueur)
         {
             $this->response($joueur, 200);
@@ -69,9 +67,9 @@ class Joueur extends REST_Controller
         {
             $this->response(array('error' => 'Joueur non trouvé'), 404);
         }
-        
+
     }
-    
+
     /*
     ** Création d'un joueur, /joueur
     ** EN POST
@@ -84,7 +82,7 @@ class Joueur extends REST_Controller
         {
             $this->response('Paramêtre(s) manquant(s)', 400);
         }
-        
+
         $saved = $this->Joueur_model->NewJoueur($data);
         if ($saved == 0)
         {
@@ -95,17 +93,17 @@ class Joueur extends REST_Controller
             $message = array('message' => 'ADDED!');
             $this->response($message, 201);
         }
-        
+
     }
-    
-    /* 
+
+    /*
     ** Update d'un joueur, /joueur
     ** EN PUT
     */
-    
+
     public function index_put()
 	{
-        
+
         $id = $this->put('id');
         $data=array('prenom_joueur' => $this->put('prenom'), 'nom_joueur' => $this->put('nom'));
         $result = $this->Joueur_model->UpdateJoueur($data, $id);
@@ -119,7 +117,7 @@ class Joueur extends REST_Controller
             $this->response($message, 201);
         }
 	}
-    
+
     /*
     ** Suppression d'un joueur, /joueur/$id
     ** EN DELETE
@@ -128,8 +126,8 @@ class Joueur extends REST_Controller
     {
         $this->Joueur_model->DeleteJoueur($this->get('id'));
         $message = array('id' => $this->get('id'), 'message' => 'DELETED!');
-        
+
         $this->response($message, 200); // 200 being the HTTP response code
     }
-    
+
 }
