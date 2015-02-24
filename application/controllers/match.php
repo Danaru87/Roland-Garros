@@ -136,10 +136,22 @@ class Match extends REST_Controller
         $this->response($message, 200); // 200 being the HTTP response code
     }
     
-    function current_get()
+    public function current_get()
     {
-        $data = $this->Match_model->ListMatchCurrent();
-        
+
+            /*
+            ** liste des match (/match)
+            */
+            $result = $this->Match_model->ListMatchCurrent();
+            if($result)
+            {
+                $this->response($result, 200);
+            }
+            else {
+                $this->response(array("error" => "Aucun match dans la base"), 404);
+            }
+
+
     }
     
 }

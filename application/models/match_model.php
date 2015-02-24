@@ -16,6 +16,7 @@ class Match_model extends CI_Model {
         
         // A Faire
         $result = $this->db->get('match')->result();
+        $this->db->close();
         if($result)
         {
             return $result;
@@ -28,21 +29,32 @@ class Match_model extends CI_Model {
     
     function ListMatchCurrent()
     {
-        $this->db->where('termine', true);
-        $matchs = $this->db->get('match')->result();
-
-        foreach($matchs as $match)
+        $this->db->where("termine", "1");
+        $result = $this->db->get('match')->result();
+        $leMatch = null;
+        foreach($result as $match)
         {
-            $this->db->where('id_joueur', $match['id_joueur_1']);
-            $joueur1 = $this->db->get('joueur')->result();
+            $this->db->from('joueur');
+            $this->db->where("id_joueur", $match->id_joueur1);
+            $this->db->select("nom_joueur, prenom_joueur, Maj");
+            $joueur = $this->db->get()->result();
+            $match->Joueur1 = $joueur;
 
-            $this->db->where('id_joueur', $match['id_joueur_2']);
-            $joueur2 = $this->db->get('joueur')->result();
+            $this->db->from('joueur');
+            $this->db->where("id_joueur", $match->id_joueur2);
+            $this->db->select("nom_joueur, prenom_joueur, Maj");
 
-            var_dump($joueur1);
-            var_dump($joueur2);
+            $joueur = $this->db->get()->result();
+            $match->Joueur2 = $joueur;
+
+            $this->db->from('terrain');
+            $this->db->where('id_terrain', $match->id_terrain);
+            $terrain = $this->db->get()->result();
+            $match->terrain = $terrain;
 
         }
+        $this->db->close();
+        return $result;
         
     }
     
@@ -55,6 +67,8 @@ class Match_model extends CI_Model {
     {
         $this->db->where("id_match", $pid);
         $query = $this->db->get('match');
+        $this->db->close();
+
         return $query->result();
     }
     
@@ -69,6 +83,7 @@ class Match_model extends CI_Model {
                       'id_joueur1' => $pdata['joueur1'],
                      'id_joueur2' => $pdata['joueur2']);
         $this->db->insert('match', $data);
+        $this->db->close();
         
         return $this->db->affected_rows();
     }
@@ -85,6 +100,8 @@ class Match_model extends CI_Model {
         $this->db->where('id_match', $pID);
         $this->db->update('match', $data);
         $result = $this->db->affected_rows();
+        $this->db->close();
+
         return $result;
     }
     
@@ -98,6 +115,7 @@ class Match_model extends CI_Model {
         
         $this->db->where('id_match', $pID);
         $this->db->delete('match');
+        $this->db->close();
     }
 
 }
