@@ -56,10 +56,8 @@ class Terrain extends REST_Controller
             }
         }
 
-        /* 
-        ** un match (/match/$id)
-        */
-        $terrain = $this->Terrain_model->ListTerrain( $this->get('id') );
+
+        $terrain = $this->Terrain_model->GetTerrain( $this->get('id') );
 
         if ($terrain)
         {

@@ -20,4 +20,12 @@ class Terrain_model extends CI_Model {
         return $terrains;
     }
 
+    function GetTerrain($id)
+    {
+        $this->db->where('id_terrain', $id);
+        $terrain = $this->db->get('terrain')->result();
+
+        return $terrain;
+    }
+
 }
