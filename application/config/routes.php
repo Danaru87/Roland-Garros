@@ -45,6 +45,10 @@ $route['joueur/(:num)'] = 'joueur/index/id/$1';
 
 // Match
 $route['match/(:num)'] = 'match/index/id/$1';
+$route['match/(:num)/scores'] = 'match/scores/id/$1';
+
+// Terrains
+$route['terrain/(:num)'] = 'terrain/index/id/$1';
 
 
 $route['404_override'] = '';

@@ -37,7 +37,6 @@ class Match_model extends CI_Model {
             $match->terrain = $terrain;
 
         }
-        $this->db->close();
         return $result;
     }
     
@@ -49,26 +48,27 @@ class Match_model extends CI_Model {
         foreach($result as $match)
         {
 
+            // Recupération du joueur 1
             $this->db->from('joueur');
             $this->db->where("id_joueur", $match->id_joueur1);
-            $this->db->select("nom_joueur, prenom_joueur, Maj");
+            $this->db->select("nom_joueur, prenom_joueur, Maj, au_service");
             $joueur = $this->db->get()->result();
             $match->Joueur1 = $joueur;
 
+            // Recupération du joueur 2
             $this->db->from('joueur');
             $this->db->where("id_joueur", $match->id_joueur2);
-            $this->db->select("nom_joueur, prenom_joueur, Maj");
-
+            $this->db->select("nom_joueur, prenom_joueur, Maj, au_service");
             $joueur = $this->db->get()->result();
             $match->Joueur2 = $joueur;
 
+            // Récupération du terrain
             $this->db->from('terrain');
             $this->db->where('id_terrain', $match->id_terrain);
             $terrain = $this->db->get()->result();
             $match->terrain = $terrain;
 
         }
-        $this->db->close();
         return $result;
         
     }
@@ -82,7 +82,6 @@ class Match_model extends CI_Model {
     {
         $this->db->where("id_match", $pid);
         $query = $this->db->get('match');
-        $this->db->close();
 
         return $query->result();
     }
@@ -98,8 +97,6 @@ class Match_model extends CI_Model {
                       'id_joueur1' => $pdata['joueur1'],
                      'id_joueur2' => $pdata['joueur2']);
         $this->db->insert('match', $data);
-        $this->db->close();
-        
         return $this->db->affected_rows();
     }
 
@@ -115,7 +112,7 @@ class Match_model extends CI_Model {
         $this->db->where('id_match', $pID);
         $this->db->update('match', $data);
         $result = $this->db->affected_rows();
-        $this->db->close();
+
 
         return $result;
     }
@@ -130,7 +127,6 @@ class Match_model extends CI_Model {
         
         $this->db->where('id_match', $pID);
         $this->db->delete('match');
-        $this->db->close();
     }
 
 }

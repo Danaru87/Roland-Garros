@@ -22,7 +22,8 @@ class Match extends REST_Controller
     {
         // Construct our parent class
         parent::__construct();
-        $this->load->model('Match_model'); 
+        $this->load->model('Match_model');
+        $this->load->model('Score_model');
         
         // Configure limits on our controller methods. Ensure
         // you have created the 'limits' table and enabled 'limits'
@@ -152,6 +153,25 @@ class Match extends REST_Controller
             }
 
 
+    }
+
+    public function scores_get()
+    {
+        if (!$this->get('id'))
+        {
+            $this->response(array("error" => "Cet URI n'existe pas"), 404);
+        }
+
+        $scores = $this->Score_model->GetScores($this->get('id'));
+
+        if ($scores)
+        {
+            $this->response($scores, 200);
+        }
+        else
+        {
+            $this->response(array('error' => 'Scores non trouvé'), 404);
+        }
     }
     
 }
